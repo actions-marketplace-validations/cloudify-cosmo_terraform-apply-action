@@ -57,7 +57,7 @@ runs:
     - name: Check if Environment exists
       if: ${{ inputs.environment-id == '-' }}
       id: check_environment
-      uses: cloudify-cosmo/environment-data-using-labels-action@v1.2
+      uses: cloudify-cosmo/environment-data-using-labels-action@v1.3
       with:
           environment-name: ${{ inputs.environment-name }}
           labels: ${{ inputs.labels }}
@@ -125,7 +125,7 @@ runs:
     - name: Execute Terraform apply
       if: ${{ steps.check_if_deployment_exists.outputs.exists != 'true' }}
       id: terraform_apply
-      uses: cloudify-cosmo/terraform-action@v1.2
+      uses: cloudify-cosmo/terraform-action@v1.3
       with:
           environment-name: ${{ inputs.environment-name }}
           module-file: ${{ inputs.module-file }}
@@ -137,7 +137,7 @@ runs:
     - name: Execute Terraform reload workflow
       if: ${{ steps.check_if_deployment_exists.outputs.exists == 'true' }}
       id: terraform_plan_wf
-      uses: cloudify-cosmo/execute-workflow-action@v1.2
+      uses: cloudify-cosmo/execute-workflow-action@v1.3
       with:
         environment-name: ${{ steps.check_if_deployment_exists.outputs.deployment_id }}
         workflow: "reload_terraform_template"
@@ -158,7 +158,7 @@ runs:
 
     - name: Get Deployment data
       id: get_deployment_data
-      uses: cloudify-cosmo/environment-data-action@v1.2
+      uses: cloudify-cosmo/environment-data-action@v1.3
       with:
           environment-name: ${{  steps.check_if_deployment_exists.outputs.deployment_id || fromJson(steps.get_deployment_id.outputs.packageJson).deployment_id }}
 
